@@ -14,35 +14,37 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
 
     body {
-      background: linear-gradient(135deg, #fff2f5 0%, #ffe8ee 50%, #fff7f9 100%);
+      background: #191216;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      color: #2b2326;
+      color: #f7eef2;
       overflow-x: hidden;
       min-height: 100vh;
-      padding-bottom: 60px;
+      padding-bottom: 70px;
     }
 
-    /* Background Animation Canvas */
-    #confetti-canvas {
+    /* Fixed Canvas strictly ignoring clicks */
+    #fx-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
+      pointer-events: none !important;
+      z-index: 99999;
     }
 
     .container {
-      max-width: 580px;
+      max-width: 550px;
       margin: 0 auto;
       padding: 20px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 10;
     }
 
     /* Top Bar */
@@ -59,38 +61,37 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #ff2a5f;
-      background: #ffffff;
+      color: #ff4d79;
+      background: #251a20;
       padding: 8px 16px;
       border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(255, 42, 95, 0.12);
-      border: 1px solid rgba(255, 42, 95, 0.2);
+      border: 1px solid rgba(255, 77, 121, 0.3);
     }
 
     .music-btn {
-      background: #ffffff;
-      border: 1px solid rgba(255, 42, 95, 0.3);
-      color: #ff2a5f;
+      background: #251a20;
+      border: 1px solid rgba(255, 77, 121, 0.4);
+      color: #ff4d79;
       padding: 9px 18px;
       border-radius: 30px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 1px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 15px rgba(255, 42, 95, 0.12);
     }
 
     .music-btn:active {
       transform: scale(0.95);
+      background: #33212b;
     }
 
     .music-dot {
       width: 8px;
       height: 8px;
-      background: #ff2a5f;
+      background: #ff4d79;
       border-radius: 50%;
     }
 
@@ -98,8 +99,8 @@
     .subtitle {
       font-size: 11px;
       letter-spacing: 2px;
-      color: #d6336c;
-      background: #ffe3ec;
+      color: #ff80a0;
+      background: rgba(255, 77, 121, 0.12);
       padding: 6px 14px;
       border-radius: 20px;
       font-weight: 700;
@@ -109,7 +110,7 @@
 
     .title {
       font-family: 'Playfair Display', serif;
-      font-size: 38px;
+      font-size: 36px;
       font-weight: 800;
       text-align: center;
       line-height: 1.2;
@@ -118,58 +119,56 @@
 
     .title span {
       font-family: 'Dancing Script', cursive;
-      color: #ff2a5f;
-      font-size: 48px;
+      color: #ff4d79;
+      font-size: 46px;
       margin-left: 6px;
     }
 
     .quote {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      color: #705b63;
+      color: #bfa6b0;
       text-align: center;
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.6;
       max-width: 90%;
-      margin: 10px 0 24px 0;
+      margin: 10px 0 26px 0;
     }
 
     /* Interactive Keepsake Panel */
     .interactive-panel {
       width: 100%;
-      background: #ffffff;
-      border-radius: 22px;
-      box-shadow: 0 12px 35px rgba(255, 42, 95, 0.15);
-      border: 2px solid #ffd6e0;
+      background: #22161c;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 77, 121, 0.3);
       overflow: hidden;
       margin-bottom: 30px;
-      transition: all 0.3s ease;
     }
 
     .panel-preview {
-      padding: 24px 20px;
+      padding: 24px 18px;
       text-align: center;
-      background: linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
-      cursor: pointer;
+      background: linear-gradient(180deg, #261820 0%, #1f141a 100%);
     }
 
     .panel-tag {
       font-family: 'Dancing Script', cursive;
       font-size: 26px;
-      color: #ff2a5f;
-      margin-bottom: 6px;
+      color: #ff4d79;
+      margin-bottom: 4px;
     }
 
     .panel-preview h3 {
       font-family: 'Playfair Display', serif;
       font-size: 20px;
       margin-bottom: 8px;
-      color: #2b2326;
+      color: #ffffff;
     }
 
     .panel-preview p {
       font-size: 13.5px;
-      color: #705b63;
+      color: #bfa6b0;
       margin-bottom: 18px;
       line-height: 1.5;
     }
@@ -178,59 +177,49 @@
       display: inline-block;
       background: linear-gradient(135deg, #ff2a5f 0%, #ff4d79 100%);
       color: #ffffff;
-      padding: 13px 28px;
+      padding: 13px 26px;
       border-radius: 30px;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 1px;
-      box-shadow: 0 6px 18px rgba(255, 42, 95, 0.35);
       border: none;
       cursor: pointer;
+      box-shadow: 0 4px 18px rgba(255, 42, 95, 0.4);
     }
 
     .tap-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
-    /* Unfolded Content Inside Panel */
+    /* Unfolded Content */
     .panel-content {
       display: none;
-      padding: 22px 20px;
-      background: #ffffff;
-      border-top: 2px dashed #ffd6e0;
-      animation: fadeIn 0.4s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .panel-content.show {
-      display: block;
+      padding: 20px;
+      background: #1c1117;
+      border-top: 1px dashed rgba(255, 77, 121, 0.3);
     }
 
     .letter-paper {
-      background: #fffbfa;
-      border: 1px solid #fae1dd;
+      background: #261820;
+      border: 1px solid rgba(255, 77, 121, 0.25);
       border-radius: 12px;
       padding: 18px;
       font-size: 14.5px;
       line-height: 1.8;
-      color: #4a3b40;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+      color: #f7eef2;
+      user-select: text;
     }
 
     .letter-paper span {
       font-weight: 700;
-      color: #ff2a5f;
+      color: #ff4d79;
     }
 
-    /* Interactive Flip Cards */
+    /* Secret Cards */
     .cards-section-title {
       font-family: 'Dancing Script', cursive;
       font-size: 28px;
-      color: #ff2a5f;
+      color: #ff4d79;
       text-align: center;
       margin: 10px 0 16px 0;
     }
@@ -244,23 +233,22 @@
     }
 
     .touch-card {
-      background: #ffffff;
-      border: 1px solid #ffd6e0;
+      background: #22161c;
+      border: 1px solid rgba(255, 77, 121, 0.25);
       border-radius: 16px;
-      padding: 18px 14px;
+      padding: 18px 12px;
       text-align: center;
       cursor: pointer;
-      box-shadow: 0 6px 16px rgba(255, 42, 95, 0.08);
       min-height: 130px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: all 0.25s ease;
     }
 
     .touch-card:active {
       transform: scale(0.96);
+      background: #2b1b24;
     }
 
     .card-icon {
@@ -271,57 +259,58 @@
     .card-label {
       font-size: 13px;
       font-weight: 700;
-      color: #ff2a5f;
+      color: #ff4d79;
       margin-bottom: 4px;
-    }
-
-    .card-secret {
-      font-size: 12px;
-      color: #55444b;
-      line-height: 1.4;
-      display: none;
-    }
-
-    .touch-card.revealed {
-      background: #fff0f4;
-      border-color: #ff2a5f;
-    }
-
-    .touch-card.revealed .card-secret {
-      display: block;
-    }
-
-    .touch-card.revealed .card-hint {
-      display: none;
     }
 
     .card-hint {
       font-size: 10px;
-      color: #b09ba2;
+      color: #8f7982;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
-    /* 10 Emotional Paragraphs */
+    .card-secret {
+      font-size: 12px;
+      color: #ffffff;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .touch-card.is-active {
+      background: #301a25;
+      border-color: #ff4d79;
+    }
+
+    .touch-card.is-active .card-hint {
+      display: none;
+    }
+
+    .touch-card.is-active .card-secret {
+      display: block;
+    }
+
+    /* 10 Detailed Paragraphs */
     .chapters-wrapper {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      user-select: text;
     }
 
     .chapter-card {
-      background: #ffffff;
+      background: #22161c;
       border-radius: 16px;
       padding: 22px 18px;
-      border: 1px solid #ffe6ec;
-      box-shadow: 0 8px 25px rgba(255, 42, 95, 0.07);
+      border: 1px solid rgba(255, 77, 121, 0.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
     }
 
     .chapter-num {
       font-family: 'Dancing Script', cursive;
       font-size: 22px;
-      color: #ff2a5f;
+      color: #ff4d79;
       margin-bottom: 2px;
     }
 
@@ -329,14 +318,14 @@
       font-family: 'Playfair Display', serif;
       font-size: 19px;
       font-weight: 700;
-      color: #2b2326;
+      color: #ffffff;
       margin-bottom: 10px;
     }
 
     .chapter-body {
       font-size: 14px;
       line-height: 1.8;
-      color: #4a3e43;
+      color: #cfbcc4;
     }
 
     /* Bottom Celebration Box */
@@ -345,21 +334,21 @@
       text-align: center;
       width: 100%;
       padding: 28px 18px;
-      background: #ffffff;
+      background: #22161c;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(255, 42, 95, 0.12);
-      border: 1px solid #ffd6e0;
+      border: 1px solid rgba(255, 77, 121, 0.3);
     }
 
     .celebration-box h2 {
       font-family: 'Playfair Display', serif;
       font-size: 24px;
       margin-bottom: 6px;
+      color: #ffffff;
     }
 
     .celebration-box p {
       font-size: 13.5px;
-      color: #705b63;
+      color: #bfa6b0;
       margin-bottom: 20px;
     }
 
@@ -372,7 +361,7 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(255, 42, 95, 0.35);
+      box-shadow: 0 6px 20px rgba(255, 42, 95, 0.4);
     }
 
     .celebrate-btn:active {
@@ -382,14 +371,13 @@
 </head>
 <body>
 
-  <!-- Confetti canvas overlay -->
-  <canvas id="confetti-canvas"></canvas>
+  <canvas id="fx-canvas"></canvas>
 
   <div class="container">
     <!-- Top Bar -->
     <div class="top-bar">
       <div class="badge">FOR VAL</div>
-      <button class="music-btn" id="musicBtn">
+      <button class="music-btn" onclick="toggleMelody()">
         <span class="music-dot" id="musicDot"></span>
         <span id="musicText">PLAY MELODY</span>
       </button>
@@ -400,15 +388,15 @@
     <h1 class="title">To My Dearest <span>Val</span></h1>
     <p class="quote">"In a loud and noisy world, your quiet kindness and gentle heart are the sweetest sanctuary I have ever known."</p>
 
-    <!-- Tap-To-Open Interactive Keepsake Panel -->
-    <div class="interactive-panel" id="interactivePanel">
-      <div class="panel-preview" id="panelTrigger">
+    <!-- Interactive Panel -->
+    <div class="interactive-panel">
+      <div class="panel-preview">
         <div class="panel-tag">Tap to Open</div>
         <h3>An Exclusive Letter For Val</h3>
         <p>I built this entire space just for you. Tap below to unfold this message.</p>
-        <button class="tap-btn" id="openPanelBtn">💌 OPEN MY LETTER</button>
+        <button class="tap-btn" id="letterBtn" onclick="toggleLetter()">💌 OPEN MY LETTER</button>
       </div>
-      <div class="panel-content" id="panelContent">
+      <div class="panel-content" id="letterContent">
         <div class="letter-paper">
           Dear Val,<br><br>
           Every single word on this page was written from the heart. You are <span>cute</span>, you are <span>beautiful</span>, you have the <span>softest heart</span>, and your genuine <span>kindness</span> means more to me than words can ever capture.<br><br>
@@ -417,28 +405,28 @@
       </div>
     </div>
 
-    <!-- Interactive Secret Cards -->
+    <!-- Secret Cards -->
     <div class="cards-section-title">Tap to Reveal Secret Notes</div>
     <div class="cards-grid">
-      <div class="touch-card" onclick="revealCard(this)">
+      <div class="touch-card" onclick="toggleCard(this)">
         <div class="card-icon">🌸</div>
         <div class="card-label">Your Soft Heart</div>
         <div class="card-hint">Tap to open</div>
         <div class="card-secret">You care so deeply, and your gentleness makes the world a safer place.</div>
       </div>
-      <div class="touch-card" onclick="revealCard(this)">
+      <div class="touch-card" onclick="toggleCard(this)">
         <div class="card-icon">✨</div>
         <div class="card-label">Your Smile</div>
         <div class="card-hint">Tap to open</div>
         <div class="card-secret">Your smile is effortlessly cute and brings genuine light to my darkest days.</div>
       </div>
-      <div class="touch-card" onclick="revealCard(this)">
+      <div class="touch-card" onclick="toggleCard(this)">
         <div class="card-icon">🤍</div>
         <div class="card-label">Your Kindness</div>
         <div class="card-hint">Tap to open</div>
         <div class="card-secret">You listen without judgment and give warmth to everyone around you.</div>
       </div>
-      <div class="touch-card" onclick="revealCard(this)">
+      <div class="touch-card" onclick="toggleCard(this)">
         <div class="card-icon">🎀</div>
         <div class="card-label">My Promise</div>
         <div class="card-hint">Tap to open</div>
@@ -448,7 +436,6 @@
 
     <!-- 10 Full Chapters -->
     <div class="chapters-wrapper">
-      
       <div class="chapter-card">
         <div class="chapter-num">Chapter I</div>
         <h2 class="chapter-title">The Rarest Kind of Beauty</h2>
@@ -508,21 +495,19 @@
         <h2 class="chapter-title">An Unbreakable Promise</h2>
         <p class="chapter-body">As you read this, I want you to remember that whatever challenges come your way, you will never have to walk through them alone. Whenever you feel doubted, tired, or overwhelmed, I will always be here to remind you how deeply loved, valued, and special you are. Thank you for simply existing as you are, Val. You are truly, wholeheartedly, irreplaceable to me.</p>
       </div>
-
     </div>
 
     <!-- Celebration Bottom Button -->
     <div class="celebration-box">
       <h2>You Mean The World To Me</h2>
       <p>Tap below to shower your screen with celebration!</p>
-      <button class="celebrate-btn" id="celebrateBtn">✨ CELEBRATE VAL ✨</button>
+      <button class="celebrate-btn" onclick="celebrate()">✨ CELEBRATE VAL ✨</button>
     </div>
-
   </div>
 
   <script>
-    // --- Custom Canvas Confetti Engine (Zero External Dependencies) ---
-    const canvas = document.getElementById('confetti-canvas');
+    // --- Canvas Confetti Particles ---
+    const canvas = document.getElementById('fx-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
@@ -533,7 +518,7 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    function shootConfetti(x, y, count = 45) {
+    function spawnConfetti(x, y, count = 35) {
       const colors = ['#ff2a5f', '#ff758c', '#ffccd5', '#ffd700', '#ffffff'];
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
@@ -547,14 +532,12 @@
           size: Math.random() * 8 + 4,
           color: colors[Math.floor(Math.random() * colors.length)],
           alpha: 1,
-          decay: Math.random() * 0.015 + 0.01,
-          rot: Math.random() * 360,
-          rotSpeed: (Math.random() - 0.5) * 6
+          decay: Math.random() * 0.015 + 0.01
         });
       }
     }
 
-    function loop() {
+    function animLoop() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
@@ -562,34 +545,50 @@
         p.y += p.vy;
         p.vy += p.gravity;
         p.alpha -= p.decay;
-        p.rot += p.rotSpeed;
 
         if (p.alpha <= 0) {
           particles.splice(i, 1);
         } else {
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate((p.rot * Math.PI) / 180);
           ctx.globalAlpha = p.alpha;
           ctx.fillStyle = p.color;
-          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-          ctx.restore();
+          ctx.fillRect(p.x, p.y, p.size, p.size);
         }
       }
-      requestAnimationFrame(loop);
+      requestAnimationFrame(animLoop);
     }
-    loop();
+    animLoop();
 
-    // --- Audio Melody Engine ---
+    // --- Audio Synth ---
     let audioCtx = null;
     let isMelodyOn = false;
     let melodyTimer = null;
 
     const chords = [
-      [261.63, 329.63, 392.00, 493.88], // Cmaj7
-      [220.00, 261.63, 329.63, 392.00], // Am7
-      [174.61, 220.00, 261.63, 329.63], // Fmaj7
-      [196.00, 246.94, 293.66, 392.00]  // G7
+      [261.63, 329.63, 392.00, 493.88],
+      [220.00, 261.63, 329.63, 392.00],
+      [174.61, 220.00, 261.63, 329.63],
+      [196.00, 246.94, 293.66, 392.00]
     ];
     let chIdx = 0;
-       
+    let noteIdx = 0;
+
+    function playTone(freq, dur = 0.8) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime +     
