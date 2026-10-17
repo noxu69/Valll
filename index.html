@@ -4,86 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>For My Dearest Val</title>
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --primary: #ff3366;
-      --primary-soft: #ffe6ec;
-      --gold: #d4a373;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text-main: #2b2326;
-      --text-muted: #6e5e64;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
 
     body {
-      background: linear-gradient(135deg, #fff5f8 0%, #ffedf2 50%, #fff9fb 100%);
+      background: linear-gradient(135deg, #fff2f5 0%, #ffe8ee 50%, #fff7f9 100%);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text-main);
+      color: #2b2326;
       overflow-x: hidden;
       min-height: 100vh;
-      position: relative;
+      padding-bottom: 60px;
     }
 
-    /* Floating particles canvas - strictly ignore all touches */
-    #fx-canvas {
+    /* Background Animation Canvas */
+    #confetti-canvas {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none !important;
-      z-index: 999;
+      pointer-events: none;
+      z-index: 9999;
     }
 
     .container {
-      position: relative;
-      z-index: 10;
-      max-width: 600px;
+      max-width: 580px;
       margin: 0 auto;
-      padding: 20px 16px 80px 16px;
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Top Action Bar */
+    /* Top Bar */
     .top-bar {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    .tag {
+    .badge {
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--primary);
+      color: #ff2a5f;
       background: #ffffff;
       padding: 8px 16px;
       border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(255, 51, 102, 0.12);
-      border: 1px solid rgba(255, 51, 102, 0.2);
+      box-shadow: 0 4px 15px rgba(255, 42, 95, 0.12);
+      border: 1px solid rgba(255, 42, 95, 0.2);
     }
 
-    .action-btn {
+    .music-btn {
       background: #ffffff;
-      border: 1px solid rgba(255, 51, 102, 0.3);
-      color: var(--primary);
-      padding: 10px 18px;
+      border: 1px solid rgba(255, 42, 95, 0.3);
+      color: #ff2a5f;
+      padding: 9px 18px;
       border-radius: 30px;
       font-size: 12px;
       font-weight: 700;
@@ -92,24 +80,22 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 15px rgba(255, 51, 102, 0.15);
-      user-select: none;
+      box-shadow: 0 4px 15px rgba(255, 42, 95, 0.12);
     }
 
-    .action-btn:active {
+    .music-btn:active {
       transform: scale(0.95);
     }
 
     .music-dot {
       width: 8px;
       height: 8px;
-      background: var(--primary);
+      background: #ff2a5f;
       border-radius: 50%;
-      display: inline-block;
     }
 
     /* Header */
-    .header-badge {
+    .subtitle {
       font-size: 11px;
       letter-spacing: 2px;
       color: #d6336c;
@@ -117,13 +103,13 @@
       padding: 6px 14px;
       border-radius: 20px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       text-align: center;
     }
 
     .title {
       font-family: 'Playfair Display', serif;
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 800;
       text-align: center;
       line-height: 1.2;
@@ -132,16 +118,15 @@
 
     .title span {
       font-family: 'Dancing Script', cursive;
-      color: var(--primary);
-      font-size: 46px;
-      display: inline-block;
+      color: #ff2a5f;
+      font-size: 48px;
       margin-left: 6px;
     }
 
     .quote {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      color: var(--text-muted);
+      color: #705b63;
       text-align: center;
       font-size: 15px;
       line-height: 1.6;
@@ -149,190 +134,194 @@
       margin: 10px 0 24px 0;
     }
 
-    /* Envelope Interactive Section */
-    .envelope-box {
+    /* Interactive Keepsake Panel */
+    .interactive-panel {
       width: 100%;
-      max-width: 360px;
-      margin: 15px auto 30px auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .envelope-prompt {
-      font-family: 'Dancing Script', cursive;
-      color: var(--primary);
-      font-size: 26px;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-
-    .envelope-sub {
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: #a8949b;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .envelope {
-      position: relative;
-      width: 310px;
-      height: 190px;
-      background: #f8c9d6;
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 15px 35px rgba(255, 51, 102, 0.2);
-    }
-
-    /* Front Bottom Flaps */
-    .envelope::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 155px solid #f6b3c4;
-      border-right: 155px solid #f6b3c4;
-      border-top: 95px solid transparent;
-      border-radius: 0 0 12px 12px;
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    /* Top Triangular Flap */
-    .envelope-flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 155px solid transparent;
-      border-right: 155px solid transparent;
-      border-top: 105px solid #f29db4;
-      transform-origin: top center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    /* Clickable Wax Seal Button */
-    .wax-seal {
-      position: absolute;
-      top: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 62px;
-      height: 62px;
-      background: radial-gradient(circle, #ff2a5f 0%, #c40034 100%);
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(196, 0, 52, 0.45);
-      border: 3px dashed rgba(255, 255, 255, 0.7);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      user-select: none;
-    }
-
-    .wax-seal:active {
-      transform: translateX(-50%) scale(0.92);
-    }
-
-    /* Hidden Letter Inside */
-    .letter-card {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      right: 15px;
-      height: 165px;
       background: #ffffff;
-      border-radius: 8px;
-      padding: 16px 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      transition: transform 0.6s ease;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: center;
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(255, 42, 95, 0.15);
+      border: 2px solid #ffd6e0;
+      overflow: hidden;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
     }
 
-    .letter-card h3 {
+    .panel-preview {
+      padding: 24px 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
+      cursor: pointer;
+    }
+
+    .panel-tag {
+      font-family: 'Dancing Script', cursive;
+      font-size: 26px;
+      color: #ff2a5f;
+      margin-bottom: 6px;
+    }
+
+    .panel-preview h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 16px;
+      font-size: 20px;
+      margin-bottom: 8px;
       color: #2b2326;
     }
 
-    .letter-card p {
-      font-size: 12px;
-      color: #6e5e64;
+    .panel-preview p {
+      font-size: 13.5px;
+      color: #705b63;
+      margin-bottom: 18px;
       line-height: 1.5;
-      font-style: italic;
     }
 
-    .scroll-btn {
-      background: linear-gradient(135deg, #ff3366 0%, #ff1a4b 100%);
+    .tap-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff2a5f 0%, #ff4d79 100%);
       color: #ffffff;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+      padding: 13px 28px;
+      border-radius: 30px;
+      font-size: 13.5px;
       font-weight: 700;
       letter-spacing: 1px;
+      box-shadow: 0 6px 18px rgba(255, 42, 95, 0.35);
+      border: none;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(255, 26, 75, 0.3);
-      user-select: none;
     }
 
-    .scroll-btn:active {
-      transform: scale(0.95);
+    .tap-btn:active {
+      transform: scale(0.96);
     }
 
-    /* Open State */
-    .envelope.is-open .envelope-flap {
-      transform: rotateX(180deg);
-      z-index: 1;
+    /* Unfolded Content Inside Panel */
+    .panel-content {
+      display: none;
+      padding: 22px 20px;
+      background: #ffffff;
+      border-top: 2px dashed #ffd6e0;
+      animation: fadeIn 0.4s ease forwards;
     }
 
-    .envelope.is-open .wax-seal {
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-content.show {
+      display: block;
+    }
+
+    .letter-paper {
+      background: #fffbfa;
+      border: 1px solid #fae1dd;
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #4a3b40;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .letter-paper span {
+      font-weight: 700;
+      color: #ff2a5f;
+    }
+
+    /* Interactive Flip Cards */
+    .cards-section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: #ff2a5f;
+      text-align: center;
+      margin: 10px 0 16px 0;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 35px;
+    }
+
+    .touch-card {
+      background: #ffffff;
+      border: 1px solid #ffd6e0;
+      border-radius: 16px;
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(255, 42, 95, 0.08);
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.25s ease;
+    }
+
+    .touch-card:active {
+      transform: scale(0.96);
+    }
+
+    .card-icon {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .card-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff2a5f;
+      margin-bottom: 4px;
+    }
+
+    .card-secret {
+      font-size: 12px;
+      color: #55444b;
+      line-height: 1.4;
       display: none;
     }
 
-    .envelope.is-open .letter-card {
-      transform: translateY(-85px);
-      z-index: 8;
-      height: 190px;
+    .touch-card.revealed {
+      background: #fff0f4;
+      border-color: #ff2a5f;
     }
 
-    /* 10 Chapters */
+    .touch-card.revealed .card-secret {
+      display: block;
+    }
+
+    .touch-card.revealed .card-hint {
+      display: none;
+    }
+
+    .card-hint {
+      font-size: 10px;
+      color: #b09ba2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* 10 Emotional Paragraphs */
     .chapters-wrapper {
       width: 100%;
-      margin-top: 30px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     .chapter-card {
-      background: var(--card-bg);
+      background: #ffffff;
       border-radius: 16px;
       padding: 22px 18px;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 8px 25px rgba(255, 51, 102, 0.08);
+      border: 1px solid #ffe6ec;
+      box-shadow: 0 8px 25px rgba(255, 42, 95, 0.07);
     }
 
     .chapter-num {
       font-family: 'Dancing Script', cursive;
       font-size: 22px;
-      color: var(--primary);
+      color: #ff2a5f;
       margin-bottom: 2px;
     }
 
@@ -350,16 +339,16 @@
       color: #4a3e43;
     }
 
-    /* Celebration Bottom Box */
+    /* Bottom Celebration Box */
     .celebration-box {
-      margin-top: 40px;
+      margin-top: 35px;
       text-align: center;
       width: 100%;
       padding: 28px 18px;
       background: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(255, 51, 102, 0.12);
-      border: 1px solid rgba(255, 51, 102, 0.15);
+      box-shadow: 0 10px 30px rgba(255, 42, 95, 0.12);
+      border: 1px solid #ffd6e0;
     }
 
     .celebration-box h2 {
@@ -370,21 +359,20 @@
 
     .celebration-box p {
       font-size: 13.5px;
-      color: var(--text-muted);
+      color: #705b63;
       margin-bottom: 20px;
     }
 
     .celebrate-btn {
-      background: linear-gradient(135deg, #ff3366 0%, #ff1a4b 100%);
+      background: linear-gradient(135deg, #ff2a5f 0%, #ff4d79 100%);
       color: #ffffff;
       border: none;
-      padding: 16px 32px;
+      padding: 16px 36px;
       border-radius: 40px;
-      font-size: 14.5px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(255, 26, 75, 0.35);
-      user-select: none;
+      box-shadow: 0 8px 24px rgba(255, 42, 95, 0.35);
     }
 
     .celebrate-btn:active {
@@ -394,45 +382,72 @@
 </head>
 <body>
 
-  <!-- Fullscreen overlay for sparkles and confetti only -->
-  <canvas id="fx-canvas"></canvas>
+  <!-- Confetti canvas overlay -->
+  <canvas id="confetti-canvas"></canvas>
 
   <div class="container">
-    <!-- Top Action Bar -->
+    <!-- Top Bar -->
     <div class="top-bar">
-      <div class="tag">FOR VAL</div>
-      <button class="action-btn" id="musicBtn" onclick="toggleMelody(event)" ontouchend="toggleMelody(event)">
+      <div class="badge">FOR VAL</div>
+      <button class="music-btn" id="musicBtn">
         <span class="music-dot" id="musicDot"></span>
         <span id="musicText">PLAY MELODY</span>
       </button>
     </div>
 
     <!-- Header -->
-    <div class="header-badge">A DEDICATION TO THE KINDEST SOUL</div>
+    <div class="subtitle">A DEDICATION TO THE KINDEST SOUL</div>
     <h1 class="title">To My Dearest <span>Val</span></h1>
     <p class="quote">"In a loud and noisy world, your quiet kindness and gentle heart are the sweetest sanctuary I have ever known."</p>
 
-    <!-- Interactive Envelope -->
-    <div class="envelope-box">
-      <div class="envelope-prompt">Click the wax seal to open</div>
-      <div class="envelope-sub">A Keepsake Made Especially For You</div>
-      
-      <div class="envelope" id="envelope">
-        <div class="envelope-flap"></div>
-        <div class="wax-seal" id="waxSeal" onclick="openEnvelope(event)" ontouchend="openEnvelope(event)">
-          <span>TAP</span>
-          <span>OPEN</span>
-        </div>
-        <div class="letter-card">
-          <h3>My Sweet Friend, Val</h3>
-          <p>"You are so cute, so soft-hearted, and the most radiant part of my world."</p>
-          <button class="scroll-btn" onclick="scrollToChapters(event)" ontouchend="scrollToChapters(event)">READ 10 CHAPTERS ↓</button>
+    <!-- Tap-To-Open Interactive Keepsake Panel -->
+    <div class="interactive-panel" id="interactivePanel">
+      <div class="panel-preview" id="panelTrigger">
+        <div class="panel-tag">Tap to Open</div>
+        <h3>An Exclusive Letter For Val</h3>
+        <p>I built this entire space just for you. Tap below to unfold this message.</p>
+        <button class="tap-btn" id="openPanelBtn">💌 OPEN MY LETTER</button>
+      </div>
+      <div class="panel-content" id="panelContent">
+        <div class="letter-paper">
+          Dear Val,<br><br>
+          Every single word on this page was written from the heart. You are <span>cute</span>, you are <span>beautiful</span>, you have the <span>softest heart</span>, and your genuine <span>kindness</span> means more to me than words can ever capture.<br><br>
+          Thank you endlessly for being my friend. Scroll down to read all 10 chapters dedicated entirely to you. ❤️
         </div>
       </div>
     </div>
 
-    <!-- 10 Detailed Paragraphs -->
-    <div class="chapters-wrapper" id="chaptersSection">
+    <!-- Interactive Secret Cards -->
+    <div class="cards-section-title">Tap to Reveal Secret Notes</div>
+    <div class="cards-grid">
+      <div class="touch-card" onclick="revealCard(this)">
+        <div class="card-icon">🌸</div>
+        <div class="card-label">Your Soft Heart</div>
+        <div class="card-hint">Tap to open</div>
+        <div class="card-secret">You care so deeply, and your gentleness makes the world a safer place.</div>
+      </div>
+      <div class="touch-card" onclick="revealCard(this)">
+        <div class="card-icon">✨</div>
+        <div class="card-label">Your Smile</div>
+        <div class="card-hint">Tap to open</div>
+        <div class="card-secret">Your smile is effortlessly cute and brings genuine light to my darkest days.</div>
+      </div>
+      <div class="touch-card" onclick="revealCard(this)">
+        <div class="card-icon">🤍</div>
+        <div class="card-label">Your Kindness</div>
+        <div class="card-hint">Tap to open</div>
+        <div class="card-secret">You listen without judgment and give warmth to everyone around you.</div>
+      </div>
+      <div class="touch-card" onclick="revealCard(this)">
+        <div class="card-icon">🎀</div>
+        <div class="card-label">My Promise</div>
+        <div class="card-hint">Tap to open</div>
+        <div class="card-secret">No matter where life goes, I will always be here to support and cheer for you.</div>
+      </div>
+    </div>
+
+    <!-- 10 Full Chapters -->
+    <div class="chapters-wrapper">
       
       <div class="chapter-card">
         <div class="chapter-num">Chapter I</div>
@@ -499,103 +514,82 @@
     <!-- Celebration Bottom Button -->
     <div class="celebration-box">
       <h2>You Mean The World To Me</h2>
-      <p>Tap below to shower your screen with love & celebration!</p>
-      <button class="celebrate-btn" onclick="fireCelebration(event)" ontouchend="fireCelebration(event)">✨ CELEBRATE VAL ✨</button>
+      <p>Tap below to shower your screen with celebration!</p>
+      <button class="celebrate-btn" id="celebrateBtn">✨ CELEBRATE VAL ✨</button>
     </div>
 
   </div>
 
   <script>
-    // --- Canvas Setup (Self-Contained Confetti & Petals) ---
-    const canvas = document.getElementById('fx-canvas');
+    // --- Custom Canvas Confetti Engine (Zero External Dependencies) ---
+    const canvas = document.getElementById('confetti-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
-    function resize() {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    class Particle {
-      constructor(x, y, isExplosion = false) {
-        this.x = x ?? Math.random() * canvas.width;
-        this.y = y ?? -15;
-        this.size = Math.random() * 8 + 5;
-        this.color = ['#ff3366', '#ff80a0', '#ffc2d1', '#ffd700', '#ffffff'][Math.floor(Math.random() * 5)];
-        this.rotation = Math.random() * 360;
-        this.rotSpeed = (Math.random() - 0.5) * 4;
-
-        if (isExplosion) {
-          const angle = Math.random() * Math.PI * 2;
-          const speed = Math.random() * 9 + 4;
-          this.vx = Math.cos(angle) * speed;
-          this.vy = Math.sin(angle) * speed - 3;
-          this.gravity = 0.25;
-          this.alpha = 1;
-          this.fade = Math.random() * 0.015 + 0.008;
-          this.isExplosion = true;
-        } else {
-          this.vx = (Math.random() - 0.5) * 0.8;
-          this.vy = Math.random() * 1.2 + 0.6;
-          this.gravity = 0;
-          this.alpha = Math.random() * 0.4 + 0.3;
-          this.fade = 0;
-          this.isExplosion = false;
-        }
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vy += this.gravity;
-        this.rotation += this.rotSpeed;
-
-        if (this.isExplosion) {
-          this.alpha -= this.fade;
-        } else if (this.y > canvas.height + 20) {
-          this.y = -15;
-          this.x = Math.random() * canvas.width;
-        }
-      }
-
-      draw() {
-        if (this.alpha <= 0) return;
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        ctx.globalAlpha = Math.max(0, this.alpha);
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+    function shootConfetti(x, y, count = 45) {
+      const colors = ['#ff2a5f', '#ff758c', '#ffccd5', '#ffd700', '#ffffff'];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 8 + 3;
+        particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2,
+          gravity: 0.22,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.01,
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 6
+        });
       }
     }
 
-    // Initialize 25 ambient falling petals
-    for (let i = 0; i < 25; i++) {
-      const p = new Particle();
-      p.y = Math.random() * canvas.height;
-      particles.push(p);
-    }
-
-    function renderLoop() {
+    function loop() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.update();
-        p.draw();
-        if (p.isExplosion && p.alpha <= 0) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= p.decay;
+        p.rot += p.rotSpeed;
+
+        if (p.alpha <= 0) {
           particles.splice(i, 1);
+        } else {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
         }
       }
-      requestAnimationFrame(renderLoop);
+      requestAnimationFrame(loop);
     }
-    renderLoop();
+    loop();
 
-    function triggerConfettiBurst(x, y, count = 50) {
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle(x, y, true));
-         
+    // --- Audio Melody Engine ---
+    let audioCtx = null;
+    let isMelodyOn = false;
+    let melodyTimer = null;
+
+    const chords = [
+      [261.63, 329.63, 392.00, 493.88], // Cmaj7
+      [220.00, 261.63, 329.63, 392.00], // Am7
+      [174.61, 220.00, 261.63, 329.63], // Fmaj7
+      [196.00, 246.94, 293.66, 392.00]  // G7
+    ];
+    let chIdx = 0;
+       
