@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Val | A Letter to the Kindest Soul</title>
-    <!-- Tailwind CSS CDN -->
+    <title>For Val | The Purest Soul</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,23 +21,25 @@
                             500: '#f43f5e',
                             600: '#e11d48',
                         },
+                        rosewater: '#fcf6f5',
+                        parchment: '#fefcf8',
+                        warmgold: '#d4af37',
                         rosegold: {
-                            light: '#fbf0ed',
+                            light: '#f7ebe7',
                             DEFAULT: '#c9968a',
-                            dark: '#9d675b',
-                            accent: '#e8b4a2'
-                        },
-                        cream: '#fdfbf7',
+                            dark: '#93584c'
+                        }
                     },
                     fontFamily: {
                         serif: ['"Playfair Display"', 'Georgia', 'serif'],
-                        script: ['"Dancing Script"', 'cursive'],
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        handwriting: ['"Dancing Script"', 'cursive'],
+                        sans: ['"Inter"', 'sans-serif'],
                     },
                     boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(225, 140, 155, 0.15)',
-                        'glow': '0 0 25px rgba(244, 63, 94, 0.25)',
-                        'soft': '0 20px 40px -15px rgba(199, 137, 137, 0.2)',
+                        'glass': '0 8px 32px 0 rgba(225, 140, 155, 0.16)',
+                        'glow': '0 0 25px rgba(244, 63, 94, 0.35)',
+                        'candle': '0 0 45px rgba(234, 179, 8, 0.25)',
                     }
                 }
             }
@@ -46,7 +48,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Canvas Confetti -->
@@ -65,56 +67,79 @@
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #fb7185;
+            background: #f43f5e;
         }
 
-        /* Ambient glowing backdrop */
         body {
-            background: radial-gradient(ellipse at top left, #fff1f2 0%, #fffbf5 40%, #fff0f3 100%);
+            background: radial-gradient(circle at 15% 20%, #fff0f3 0%, #fffdfa 45%, #fce7eb 100%);
             min-height: 100vh;
-            color: #4a3b3e;
+            color: #443236;
             overflow-x: hidden;
-            user-select: text;
         }
 
-        /* Glassmorphism styling */
+        /* Glassmorphism containers */
         .glass-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px -10px rgba(225, 29, 72, 0.08);
         }
-
         .glass-card-hover {
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .glass-card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 35px -10px rgba(225, 29, 72, 0.15);
-            background: rgba(255, 255, 255, 0.85);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -12px rgba(244, 63, 94, 0.18);
+            background: rgba(255, 255, 255, 0.92);
             border-color: rgba(254, 205, 211, 0.9);
         }
 
-        /* 3D Envelope Animation */
-        .perspective-1000 {
-            perspective: 1000px;
+        /* 3D Envelope Physics Styling */
+        .envelope-perspective {
+            perspective: 1200px;
         }
-        .flap-open {
+        .envelope-flap {
+            transform-origin: top center;
+            transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s ease;
+            z-index: 30;
+        }
+        .envelope-open .envelope-flap {
             transform: rotateX(180deg);
-            z-index: 0 !important;
+            z-index: 10;
         }
-        .letter-revealed {
-            transform: translateY(-45%) !important;
-            opacity: 1 !important;
-            z-index: 25 !important;
+        .letter-paper {
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease;
+            transform: translateY(0);
+            z-index: 15;
+        }
+        .envelope-open .letter-paper {
+            transform: translateY(-80px) scale(1.03);
+            z-index: 35;
+            box-shadow: 0 25px 45px -10px rgba(180, 83, 9, 0.25);
         }
 
-        /* Card flip */
+        /* Wax seal stamp crack and melt animation */
+        @keyframes sealPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+        }
+        .seal-pulse {
+            animation: sealPulse 2s infinite ease-in-out;
+        }
+        .envelope-open .seal-pulse {
+            animation: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.6) rotate(35deg);
+            transition: all 0.4s ease;
+        }
+
+        /* Flip Card 3D */
         .flip-card-inner {
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
             transform-style: preserve-3d;
         }
-        .flip-card:hover .flip-card-inner,
         .flip-card.flipped .flip-card-inner {
             transform: rotateY(180deg);
         }
@@ -123,17 +148,8 @@
             -webkit-backface-visibility: hidden;
         }
 
-        /* Pulsing warm glow */
-        @keyframes subtleGlow {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.75; transform: scale(1.06); }
-        }
-        .animate-subtle-glow {
-            animation: subtleGlow 8s ease-in-out infinite;
-        }
-
-        /* Floating petal animations */
-        #petalCanvas {
+        /* Interactive Canvas */
+        #interactiveCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -144,195 +160,188 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased text-stone-700 selection:bg-blush-200 selection:text-blush-600">
+<body class="font-sans antialiased selection:bg-blush-200 selection:text-blush-600">
 
-    <!-- Interactive Canvas for Floating Petals and Sparkles -->
-    <canvas id="petalCanvas"></canvas>
+    <!-- Interactive Canvas Layer (Petals, Mouse Fairy Dust, Sparkles) -->
+    <canvas id="interactiveCanvas"></canvas>
 
-    <!-- Floating Audio & Interactivity Controller Bar -->
-    <div class="fixed top-5 right-5 z-50 flex items-center gap-3">
-        <!-- Ambient Music Toggle (Web Audio Synth) -->
-        <button id="musicToggle" class="group flex items-center gap-2.5 px-4 py-2.5 rounded-full glass-card border border-blush-200 shadow-md hover:shadow-glow transition-all duration-300 text-stone-700 hover:text-blush-600 focus:outline-none">
-            <span id="musicIcon" class="relative flex h-3 w-3">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blush-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-blush-500"></span>
-            </span>
-            <i data-lucide="music" class="w-4 h-4 text-blush-500 transition-transform group-hover:scale-110"></i>
-            <span id="musicLabel" class="text-xs font-semibold uppercase tracking-wider">Play Soft Melody</span>
-        </button>
-
-        <!-- Drop Flower Action Button -->
-        <button id="dropFlowerBtn" title="Drop fresh rose petals" class="p-2.5 rounded-full glass-card border border-blush-200 shadow-md hover:shadow-glow text-blush-500 hover:bg-white transition-all duration-300 focus:outline-none hover:rotate-12">
-            <i data-lucide="flower-2" class="w-5 h-5"></i>
-        </button>
-    </div>
-
-    <!-- Background Atmospheric Radial Glows -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-rose-200/40 blur-3xl animate-subtle-glow"></div>
-        <div class="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-blush-200/30 blur-3xl animate-subtle-glow" style="animation-delay: -3s;"></div>
-        <div class="absolute bottom-10 left-1/4 w-[36rem] h-[36rem] rounded-full bg-amber-100/40 blur-3xl animate-subtle-glow" style="animation-delay: -5s;"></div>
-    </div>
-
-    <main class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-20 flex flex-col items-center">
-
-        <!-- HEADER / HERO SECTION -->
-        <section class="text-center w-full mb-16 pt-6">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blush-100/80 border border-blush-200 text-blush-600 text-xs sm:text-sm font-medium tracking-wide uppercase mb-6 shadow-sm">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                A Sanctuary Written For You
+    <!-- Top Floating Controller Bar -->
+    <header class="fixed top-4 inset-x-0 z-50 px-4 pointer-events-none">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border border-rose-200/60 shadow-sm">
+                <i data-lucide="heart" class="w-4 h-4 fill-blush-500 text-blush-500 animate-pulse"></i>
+                <span class="text-xs font-serif font-bold tracking-wider uppercase text-stone-700">For Val</span>
             </div>
 
-            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-stone-800 mb-4 leading-tight">
-                To My Dearest <span class="font-script font-bold text-5xl sm:text-7xl md:text-8xl text-blush-500 inline-block px-2 transform -rotate-1 hover:rotate-2 transition-transform duration-300">Val</span>
+            <div class="pointer-events-auto flex items-center gap-2">
+                <!-- Audio Music Player Button -->
+                <button id="musicBtn" class="flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-blush-200 shadow-md hover:shadow-glow text-stone-700 hover:text-blush-600 transition-all duration-300">
+                    <span id="musicIndicator" class="relative flex h-2.5 w-2.5">
+                        <span id="musicPing" class="hidden absolute inline-flex h-full w-full rounded-full bg-blush-400 opacity-75 animate-ping"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blush-500"></span>
+                    </span>
+                    <i data-lucide="music" class="w-4 h-4 text-blush-500"></i>
+                    <span id="musicBtnText" class="text-xs font-semibold uppercase tracking-wider">Play Piano Chimes</span>
+                </button>
+
+                <!-- Sound FX Mute Toggle -->
+                <button id="sfxToggleBtn" title="Toggle Sound Effects" class="p-2.5 rounded-full glass-card border border-blush-200 shadow-md hover:shadow-glow text-stone-600 hover:text-blush-500 transition-all">
+                    <i id="sfxIcon" data-lucide="volume-2" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-20 flex flex-col items-center">
+
+        <!-- HERO SECTION -->
+        <section class="text-center w-full mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blush-100/90 border border-blush-200 text-blush-600 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-6 shadow-sm">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                A Sanctuary Dedicated To The Kindest Soul
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-stone-800 mb-3 leading-tight">
+                To My Dearest <span class="font-script font-normal text-6xl sm:text-8xl md:text-9xl text-blush-500 inline-block px-2 transform -rotate-2 hover:rotate-1 transition-transform cursor-pointer">Val</span>
             </h1>
 
-            <p class="font-serif italic text-lg sm:text-2xl text-stone-600 max-w-2xl mx-auto font-light leading-relaxed">
-                "In a loud and hurried world, your existence is the softest, most beautiful melody."
+            <p class="font-serif italic text-lg sm:text-2xl text-stone-600 max-w-2xl mx-auto font-light leading-relaxed mt-4">
+                "In a loud and chaotic world, your presence is the gentle melody that brings peace to my heart."
             </p>
 
-            <div class="mt-8 flex justify-center items-center gap-2 text-rosegold">
-                <div class="h-[1px] w-12 bg-blush-300"></div>
-                <i data-lucide="heart" class="w-4 h-4 fill-blush-400 text-blush-400 animate-pulse"></i>
-                <div class="h-[1px] w-12 bg-blush-300"></div>
+            <div class="mt-8 flex justify-center items-center gap-3">
+                <div class="h-[1px] w-14 bg-gradient-to-r from-transparent to-blush-300"></div>
+                <i data-lucide="heart" class="w-5 h-5 fill-blush-400 text-blush-400"></i>
+                <div class="h-[1px] w-14 bg-gradient-to-l from-transparent to-blush-300"></div>
             </div>
         </section>
 
-        <!-- INTERACTIVE ENVELOPE / OPENING INVITATION -->
-        <section class="w-full max-w-lg mb-24 flex flex-col items-center">
-            <p class="text-sm uppercase tracking-widest text-stone-500 mb-5 font-semibold text-center">
-                A keepsake wax-sealed envelope for you
-            </p>
+        <!-- HYPER-INTERACTIVE 3D ENVELOPE & LETTER -->
+        <section class="w-full max-w-md sm:max-w-lg mb-28 flex flex-col items-center">
+            <div class="text-center mb-4">
+                <span class="font-handwriting text-2xl text-blush-500 block">Click the wax seal to open</span>
+                <p class="text-xs uppercase tracking-widest text-stone-400 font-semibold">A personalized keepsake for you</p>
+            </div>
 
-            <!-- Envelope Container -->
-            <div class="relative w-full h-72 sm:h-80 cursor-pointer select-none perspective-1000 group" id="envelopeWrapper">
-                <!-- Base Envelope Back -->
-                <div class="absolute inset-0 bg-rosegold-accent/30 rounded-2xl border border-blush-200/80 shadow-lg backdrop-blur-md"></div>
+            <div id="envelopeContainer" class="envelope-perspective relative w-full h-72 sm:h-80 cursor-pointer select-none">
+                <!-- Envelope Body Back -->
+                <div class="absolute inset-0 bg-[#edd6d0] rounded-2xl border border-rose-300/80 shadow-2xl"></div>
 
-                <!-- Folded Letter Inside -->
-                <div id="letterPaper" class="absolute inset-x-4 top-4 bottom-4 bg-white/95 rounded-xl shadow-md border border-blush-100 p-6 flex flex-col justify-center items-center text-center transition-all duration-700 transform translate-y-0 opacity-90 z-10">
-                    <i data-lucide="feather" class="w-8 h-8 text-blush-400 mb-2"></i>
-                    <h3 class="font-serif text-xl sm:text-2xl font-bold text-stone-800">For Val, with infinite fondness</h3>
-                    <p class="font-script text-xl sm:text-2xl text-blush-500 mt-2">Open when you need to be reminded how loved you are.</p>
-                    <span class="mt-4 text-xs font-semibold uppercase tracking-wider text-stone-400 group-hover:text-blush-500 transition-colors">
-                        Click the seal to read
-                    </span>
-                </div>
+                <!-- Slide-out Letter Inside -->
+                <div id="letterPaper" class="letter-paper absolute inset-x-3 sm:inset-x-6 top-4 bottom-4 bg-[#fffdf9] rounded-xl border border-amber-200/80 p-6 flex flex-col justify-between shadow-md">
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blush-50 text-blush-500 mb-2 shadow-inner">
+                            <i data-lucide="feather" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-stone-800">My Sweetest Friend, Val</h3>
+                        <p class="font-handwriting text-lg sm:text-xl text-blush-500 mt-1">"You are cute, soft hearted, and completely irreplaceable."</p>
+                    </div>
 
-                <!-- Envelope Front Pouch (V-Shape bottom fold) -->
-                <div class="absolute bottom-0 inset-x-0 h-44 bg-gradient-to-t from-blush-100/90 to-white/70 backdrop-blur-md rounded-b-2xl border-b border-x border-blush-200 z-20 flex items-center justify-center pointer-events-none">
-                    <!-- Heart Wax Seal -->
-                    <div id="waxSeal" class="pointer-events-auto w-14 h-14 rounded-full bg-gradient-to-br from-blush-500 to-rose-600 shadow-lg flex items-center justify-center text-white cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 border-2 border-white/80">
-                        <i data-lucide="heart" class="w-6 h-6 fill-white"></i>
+                    <p class="text-xs sm:text-sm text-stone-600 font-serif italic text-center px-2 line-clamp-3">
+                        I made this entire website just to give back a fraction of the happiness you bring into my life every single day...
+                    </p>
+
+                    <div class="text-center pt-2 border-t border-amber-100">
+                        <button id="readLetterBtn" class="px-4 py-2 rounded-full bg-blush-500 hover:bg-blush-600 text-white font-medium text-xs tracking-wider uppercase shadow-md hover:scale-105 transition-transform flex items-center justify-center gap-1.5 mx-auto">
+                            <span>Read Full 10 Chapters Below</span>
+                            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Envelope Flap (Top Triangle) -->
-                <div id="envelopeFlap" class="absolute top-0 inset-x-0 h-28 bg-blush-200/90 rounded-t-2xl origin-top transition-transform duration-700 z-30 shadow-sm border-t border-x border-blush-300/60" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+                <!-- Envelope Front Pocket (Lower Triangular Fold) -->
+                <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#f6ded8] to-[#fbf0ed] rounded-b-2xl border-t border-x border-white/60 shadow-inner z-25 flex items-center justify-center pointer-events-none" style="clip-path: polygon(0% 100%, 100% 100%, 100% 25%, 50% 85%, 0% 25%);"></div>
+
+                <!-- Envelope Front Lateral Flaps -->
+                <div class="absolute inset-0 rounded-2xl pointer-events-none z-20" style="background: linear-gradient(135deg, rgba(243,215,208,0.7) 0%, rgba(255,255,255,0) 50%, rgba(237,204,196,0.7) 100%);"></div>
+
+                <!-- Envelope Top Flap -->
+                <div id="envelopeFlap" class="envelope-flap absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#e8cdc6] to-[#dfbeb7] rounded-t-2xl shadow-md border-b border-rose-300/40" style="clip-path: polygon(0% 0%, 100% 0%, 50% 100%);"></div>
+
+                <!-- Wax Seal Stamp Button -->
+                <div id="waxSealBtn" class="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40">
+                    <div class="seal-pulse w-16 h-16 rounded-full bg-gradient-to-tr from-rose-700 via-blush-600 to-rose-500 border-2 border-amber-300/80 shadow-2xl flex flex-col items-center justify-center text-white cursor-pointer hover:scale-110 active:scale-90 transition-transform">
+                        <i data-lucide="heart" class="w-7 h-7 fill-white stroke-rose-800"></i>
+                        <span class="text-[9px] font-bold tracking-tighter uppercase text-amber-200 mt-0.5">OPEN</span>
+                    </div>
+                </div>
             </div>
 
-            <div id="readNotice" class="text-xs text-stone-400 mt-4 flex items-center gap-1.5 opacity-0 transition-opacity duration-300">
+            <div id="statusInstruction" class="text-xs text-stone-500 mt-4 flex items-center gap-2 opacity-100 transition-opacity">
                 <i data-lucide="sparkle" class="w-3.5 h-3.5 text-blush-400"></i>
-                Scroll down to read every letter dedicated to your sweet heart
+                <span>Tap the heart wax seal to break open Val's letter</span>
             </div>
         </section>
 
-        <!-- PHOTO MOMENTS / POLAROID MEMORIES -->
-        <section class="w-full mb-24">
-            <div class="text-center mb-10">
-                <span class="font-script text-3xl text-blush-500 block mb-1">Glimpses of Pure Light</span>
-                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-800">You Make The Whole World Gentler</h2>
+        <!-- INTERACTIVE SECRET NOTE POLAROIDS -->
+        <section class="w-full mb-28">
+            <div class="text-center mb-12">
+                <span class="font-handwriting text-3xl sm:text-4xl text-blush-500 block mb-1">Interactive Polaroids</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-800">Tap To Reveal Secret Notes</h2>
+                <p class="text-sm text-stone-500 mt-1">Every card contains an honest truth about why you're adored</p>
             </div>
 
-            <!-- Polaroid Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                <!-- Polaroid 1 -->
-                <div class="glass-card glass-card-hover p-4 pb-6 rounded-2xl transform md:-rotate-2">
-                    <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-tr from-rose-100 via-blush-50 to-pink-100 relative group flex items-center justify-center p-6 text-center border border-blush-200/60">
-                        <!-- Delicate SVG Floral Illustration -->
-                        <div class="flex flex-col items-center">
-                            <div class="w-20 h-20 rounded-full bg-white/70 shadow-inner flex items-center justify-center mb-3 text-blush-400 group-hover:scale-110 transition-transform duration-300">
-                                <i data-lucide="sun" class="w-10 h-10 stroke-[1.5]"></i>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="flip-card h-72 cursor-pointer group" onclick="flipCard(this)">
+                    <div class="flip-card-inner relative w-full h-full">
+                        <!-- Front -->
+                        <div class="backface-hidden absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-blush-200/70 shadow-md">
+                            <div class="w-full h-40 rounded-xl bg-gradient-to-br from-rose-100 to-pink-50 flex items-center justify-center border border-rose-200/50 shadow-inner group-hover:scale-102 transition-transform">
+                                <div class="w-16 h-16 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-blush-500">
+                                    <i data-lucide="smile" class="w-8 h-8"></i>
+                                </div>
                             </div>
-                            <span class="font-serif italic text-stone-600 text-sm">"Your smile is literal sunshine on rainy days."</span>
+                            <div class="mt-2">
+                                <h4 class="font-serif font-bold text-stone-800 text-base">Your Cute Smile</h4>
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-blush-500 flex items-center justify-center gap-1 mt-1">
+                                    Tap to flip <i data-lucide="rotate-cw" class="w-3 h-3"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pt-4 text-center">
-                        <p class="font-script text-2xl text-stone-700">The Prettiest Heart</p>
-                        <p class="text-xs uppercase tracking-wider text-stone-400 font-medium mt-1">Soft & Radiant</p>
+                        <!-- Back -->
+                        <div class="backface-hidden absolute inset-0 bg-gradient-to-br from-blush-500 to-rose-600 text-white rounded-2xl p-6 flex flex-col justify-center items-center text-center shadow-xl [transform:rotateY(180deg)] border border-rose-300">
+                            <i data-lucide="quote" class="w-6 h-6 text-rose-200 mb-2 opacity-75"></i>
+                            <p class="font-serif italic text-sm leading-relaxed">
+                                "When you smile, your eyes crinkle in the cutest way imaginable. It is genuine, radiant, and cures any dark day."
+                            </p>
+                            <span class="mt-4 text-[10px] font-bold tracking-widest uppercase text-rose-200">Truth #1 • Pure Joy</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Polaroid 2 (Prominent Center) -->
-                <div class="glass-card glass-card-hover p-4 pb-6 rounded-2xl transform md:translate-y-[-8px]">
-                    <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-tr from-pink-100 via-rose-50 to-amber-50 relative group flex items-center justify-center p-6 text-center border border-blush-200/60">
-                        <div class="flex flex-col items-center">
-                            <div class="w-20 h-20 rounded-full bg-white/70 shadow-inner flex items-center justify-center mb-3 text-blush-500 group-hover:scale-110 transition-transform duration-300">
-                                <i data-lucide="sparkles" class="w-10 h-10 stroke-[1.5]"></i>
+                <!-- Card 2 -->
+                <div class="flip-card h-72 cursor-pointer group" onclick="flipCard(this)">
+                    <div class="flip-card-inner relative w-full h-full">
+                        <div class="backface-hidden absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-blush-200/70 shadow-md">
+                            <div class="w-full h-40 rounded-xl bg-gradient-to-br from-blush-100 to-rose-50 flex items-center justify-center border border-rose-200/50 shadow-inner group-hover:scale-102 transition-transform">
+                                <div class="w-16 h-16 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-blush-500">
+                                    <i data-lucide="heart" class="w-8 h-8 fill-blush-100"></i>
+                                </div>
                             </div>
-                            <span class="font-serif italic text-stone-600 text-sm">"You walk into moments and turn them into gold."</span>
+                            <div class="mt-2">
+                                <h4 class="font-serif font-bold text-stone-800 text-base">Your Soft Heart</h4>
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-blush-500 flex items-center justify-center gap-1 mt-1">
+                                    Tap to flip <i data-lucide="rotate-cw" class="w-3 h-3"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pt-4 text-center">
-                        <p class="font-script text-2xl text-blush-600 font-bold">Incomparable Val</p>
-                        <p class="text-xs uppercase tracking-wider text-blush-400 font-semibold mt-1">Genuinely Pure</p>
+                        <div class="backface-hidden absolute inset-0 bg-gradient-to-br from-blush-500 to-rose-600 text-white rounded-2xl p-6 flex flex-col justify-center items-center text-center shadow-xl [transform:rotateY(180deg)] border border-rose-300">
+                            <i data-lucide="quote" class="w-6 h-6 text-rose-200 mb-2 opacity-75"></i>
+                            <p class="font-serif italic text-sm leading-relaxed">
+                                "You feel things deeply. In a cold world, your gentle sensitivity and vulnerability are your most magnificent treasures."
+                            </p>
+                            <span class="mt-4 text-[10px] font-bold tracking-widest uppercase text-rose-200">Truth #2 • Rare Soul</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Polaroid 3 -->
-                <div class="glass-card glass-card-hover p-4 pb-6 rounded-2xl transform md:rotate-2">
-                    <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-tr from-amber-50 via-blush-50 to-rose-100 relative group flex items-center justify-center p-6 text-center border border-blush-200/60">
-                        <div class="flex flex-col items-center">
-                            <div class="w-20 h-20 rounded-full bg-white/70 shadow-inner flex items-center justify-center mb-3 text-rose-400 group-hover:scale-110 transition-transform duration-300">
-                                <i data-lucide="smile" class="w-10 h-10 stroke-[1.5]"></i>
-                            </div>
-                            <span class="font-serif italic text-stone-600 text-sm">"That laugh that instantly makes everything okay."</span>
-                        </div>
-                    </div>
-                    <div class="pt-4 text-center">
-                        <p class="font-script text-2xl text-stone-700">Forever Grateful</p>
-                        <p class="text-xs uppercase tracking-wider text-stone-400 font-medium mt-1">My Favorite Person</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- THE 10 TENDER PARAGRAPHS ABOUT VAL -->
-        <section id="lettersSection" class="w-full mb-28">
-            <div class="text-center mb-16">
-                <span class="font-script text-3xl sm:text-4xl text-blush-500 block mb-2">Ten Chapters of You</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800 tracking-tight">Ten Truths I Want You To Always Carry</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-transparent via-blush-400 to-transparent mx-auto mt-4 rounded-full"></div>
-            </div>
-
-            <div class="space-y-8 sm:space-y-10">
-
-                <!-- Paragraph 1: Her Breathtaking Beauty -->
-                <article class="glass-card glass-card-hover rounded-3xl p-6 sm:p-10 border border-white/80 relative overflow-hidden">
-                    <span class="absolute top-4 right-6 font-serif text-6xl font-black text-blush-200/30 select-none">01</span>
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="w-8 h-8 rounded-full bg-blush-100 text-blush-600 flex items-center justify-center text-sm font-semibold">1</span>
-                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-stone-800">Your Untouchable, Natural Beauty</h3>
-                    </div>
-                    <p class="text-stone-700 leading-relaxed font-sans text-base sm:text-lg">
-                        Val, there is an effortless, breathtaking grace about you that words can barely capture. You are so genuinely, undeniably cute and beautiful—not merely in the way you look when you smile or turn your head, but in the entire aura you bring into a room. Your beauty isn’t loud or artificial; it is like morning light filtering softly through linen, unforced, luminous, and soothing. Just catching a glimpse of you or hearing your voice softens the hardest parts of my day, and I hope you never look in the mirror and forget just how profoundly lovely you are to everyone lucky enough to gaze upon you.
-                    </p>
-                </article>
-
-                <!-- Paragraph 2: Her Soft Heart -->
-                <article class="glass-card glass-card-hover rounded-3xl p-6 sm:p-10 border border-white/80 relative overflow-hidden">
-                    <span class="absolute top-4 right-6 font-serif text-6xl font-black text-blush-200/30 select-none">02</span>
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="w-8 h-8 rounded-full bg-blush-100 text-blush-600 flex items-center justify-center text-sm font-semibold">2</span>
-                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-stone-800">The Softness of Your Heart in a Harsh World</h3>
-                    </div>
-                    <p class="text-stone-700 leading-relaxed font-sans text-base sm:text-lg">
-                        What makes you truly rare is your tender, soft-hearted nature. In a world where people so quickly build walls and turn cold, you keep your heart open, feeling things deeply and caring with every ounce of your spirit. You never pretend to be callous. You hurt when others hurt, you celebrate when others rejoice, and you possess a gentle vulnerability that is not a weakness, but the greatest superpower you possess. Being around your soft heart makes the rest of the world feel safe, like an oasis where nobody has to put on armor to be understood.
-                    </p>
-                </article>
-
-                <!-- Paragraph 3: Her Infinite Kindness -->
-                <article class="glass-card glass-card-hover rounded-3xl p-6 sm:p-10 border border-white/80 relative overflow-hidden">
-                    <span class="absolute top-4 right-6 font-serif text-6xl font-black text-blush-200/30 select-none">03</span>
-                    <div class="flex items-center gap-3 mb-4">
-           
+                <!-- Card 3 -->
+                <div class="flip-card h-72 cursor-pointer group" onclick="flipCard(this)">
+                    <div class="flip-card-inner relative w-full h-full">
+                        <div class="backface-hidden absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-blush-200/70 shadow-md">
+                            <div class="w-full h-40 rounded-xl bg-gradient-to-br from-amber-50 to-rose-100 flex items-center justify-center border border-rose-200/50 shadow-inner group-hover:scale-102 transition-transform">
+                                <div class="w-16 h-16 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-blush-500">
+                                    <i data-lucide="sun" class="w-8 h-8"></i>
+                                </div>
+                        
